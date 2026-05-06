@@ -3,10 +3,10 @@
 //Transição entre etapas
 // Professor Luiz Carlos
 int BL = 6;
-int rele1 = 3;
-int rele2 = 4;
-int rele3 = 5;
-int rele4 = 6;
+int rele1 = 2;
+int rele2 = 3;
+int rele3 = 4;
+int rele4 = 5;
 int estado = 0;
 
 void setup()
