@@ -5,7 +5,7 @@
 // ==========================
 // LCD I2C
 // ==========================
-LiquidCrystal_I2C lcd(0x21, 16, 2);
+LiquidCrystal_I2C lcd(0x27, 16, 2);
 
 // ==========================
 // Configuração do teclado 4x3
@@ -21,8 +21,8 @@ char teclas[LINHAS][COLUNAS] = {
 };
 
 // Pinos do teclado
-byte pinosLinhas[LINHAS] = {10, 9, 8, 7};
-byte pinosColunas[COLUNAS] = {6, 5, 4};
+byte pinosLinhas[LINHAS] = {9, 8, 7, 6};
+byte pinosColunas[COLUNAS] = {5, 4, 3};
 
 Keypad teclado = Keypad(
   makeKeymap(teclas),
