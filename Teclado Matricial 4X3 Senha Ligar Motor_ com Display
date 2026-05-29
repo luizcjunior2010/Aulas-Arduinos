@@ -4,9 +4,8 @@
 
 // ==========================
 // LCD I2C
-// Endereço comum: 0x27
 // ==========================
-LiquidCrystal_I2C lcd(0x27, 16, 2);
+LiquidCrystal_I2C lcd(0x21, 16, 2);
 
 // ==========================
 // Configuração do teclado 4x3
@@ -46,6 +45,10 @@ String senhaCorreta = "1234";
 String senhaDigitada = "";
 
 bool sistemaLiberado = false;
+bool estadoLed = false;
+
+// Variável para detectar mudança do botão
+bool ultimoEstadoBotao = HIGH;
 
 void setup() {
 
@@ -78,7 +81,7 @@ void loop() {
 
   if (tecla) {
 
-    // Tecla # confirma senha
+    // Confirmar senha
     if (tecla == '#') {
 
       lcd.clear();
@@ -115,6 +118,8 @@ void loop() {
         lcd.clear();
         lcd.setCursor(0, 0);
         lcd.print("Digite Senha");
+        lcd.setCursor(0, 1);
+        lcd.print("----");
       }
 
       senhaDigitada = "";
@@ -153,29 +158,39 @@ void loop() {
   }
 
   // ==========================
-  // Controle do LED
+  // Controle do LED (TOGGLE)
   // ==========================
   if (sistemaLiberado) {
 
-    if (digitalRead(botaoPin) == LOW) {
+    bool estadoBotao = digitalRead(botaoPin);
 
-      digitalWrite(ledPin, HIGH);
+    // Detecta quando botão é apertado
+    if (ultimoEstadoBotao == HIGH && estadoBotao == LOW) {
 
+      // Inverte estado do LED
+      estadoLed = !estadoLed;
+
+      digitalWrite(ledPin, estadoLed);
+
+      // Atualiza LCD
       lcd.setCursor(0, 1);
-      lcd.print("LED Ligado     ");
+
+      if (estadoLed) {
+        lcd.print("LED Ligado     ");
+      } 
+      else {
+        lcd.print("LED Desligado  ");
+      }
+
+      delay(200); // debounce simples
     }
 
-    else {
-
-      digitalWrite(ledPin, LOW);
-
-      lcd.setCursor(0, 1);
-      lcd.print("Aguardando...  ");
-    }
+    ultimoEstadoBotao = estadoBotao;
   }
 
   else {
 
     digitalWrite(ledPin, LOW);
+    estadoLed = false;
   }
 }
