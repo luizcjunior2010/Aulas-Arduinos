@@ -2,9 +2,9 @@
    PINAGEM MOTOR A - L298N
    ========================== */
 
-int IN1 = 2;
-int IN2 = 4;
-int velocidadeA = 3;
+int IN1 = 5;
+int IN2 = 6;
+int velocidadeA = 10;
 
 // Variável auxiliar PWM
 int velocidade = 0;
